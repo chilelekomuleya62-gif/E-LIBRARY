@@ -67,7 +67,7 @@
         </section>
 
        <section class="mb-10">
-            <form action="https://drive.google.com/drive/folders/1Nk6FdoDGxn9q2iRM3hL1vj0TiXAafNw5?usp=sharing" method="get" target="_blank" id="search-form">
+            <form>
                 <div class="relative">
                     <input type="text" name="q" id="search-input" placeholder="Search resources, topics, or courses..." 
                            class="w-full py-3 pl-12 pr-4 text-gray-700 border border-gray-300 rounded-xl focus:ring-unzabeca-gold focus:border-unzabeca-gold shadow-inner">
@@ -156,14 +156,29 @@
             document.body.appendChild(messageBox);
         }
 
-        // 1. Search Bar Functionality
+        // 1. Search Bar Functionality (Triggers on 'Enter')
         document.getElementById('search-input').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
-                const query = e.target.value.trim();
-                showMessage("Search Feature", `You searched for: <strong>${query}</strong>.<br>This is where the search results would load!`);
-                e.target.value = ''; // Clear input after search
+                const query = e.target.value.trim().toUpperCase(); // Normalize query
+                
+                if (courseMap[query]) {
+                    // Match found! Redirect to the specific course folder.
+                    window.open(courseMap[query], '_blank');
+                    e.target.value = ''; // Clear input
+                } else {
+                    // No direct course match found. FALLBACK TO GENERAL GOOGLE SEARCH (AI-powered).
+                    const generalSearchUrl = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+                    
+                    showMessage(
+                        "No Direct Course Found", 
+                        `No specific folder found for <strong>${query}</strong>. Performing general Google search...`,
+                        false
+                    );
+                    // Give user time to read message, then redirect
+                    setTimeout(() => {
+                        window.open(generalSearchUrl, '_blank');
+                    }, 1500); 
+                }
+                e.target.value = ''; // Clear input
             }
         });
-    </script>
-</body>
-</html>

@@ -8,16 +8,16 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* --- THEME CUSTOM STYLES --- */
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f8fafc;
-            /* UNZABECA LOGO AS REPEATING WALLPAPER */
-            background-image: url('100254264.jpg');
-            background-repeat: repeat;
-            background-size: 150px; /* Small, repeating pattern */
-            background-attachment: fixed;
-        }
-        
+   body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f8fafc;
+    /* NEW SINGLE FULL-SCREEN BACKGROUND IMAGE */
+    background-image: url('100254264.jpg'); /* <--- Use your new image's filename here */
+    background-repeat: no-repeat;                 /* <--- Stops the image from tiling/repeating */
+    background-size: cover;                      /* <--- Stretches the image to cover the entire screen */
+    background-position: center;                 /* <--- Centers the image on the screen */
+    background-attachment: fixed;
+}
         /* Custom Gold/Yellow Color - Matching the Logo */
         .bg-unzabeca-gold { background-color: #FFC300; }
         .text-unzabeca-gold { color: #FFC300; }

@@ -132,5 +132,65 @@
             <p class="mt-1">Designed with simplicity and accessibility in mind.</p>
         </div>
     </footer>
+<script>
+        
+        // --- COURSE REDIRECTION MAP: UPDATE PLACEHOLDERS BELOW! ---
+        // REPLACE THE PLACEHOLDERS WITH YOUR ACTUAL GOOGLE DRIVE FOLDER LINKS.
+        const courseMap = {
+            "BUE 301": "YOUR_BUE_301_DRIVE_LINK_HERE", 
+            "ECON 200": "YOUR_ECON_200_DRIVE_LINK_HERE", 
+            "BUE 400": "YOUR_BUE_400_DRIVE_LINK_HERE", 
+            // Add more courses here (e.g., "ECO 101": "YOUR_ECO_101_LINK",)
+        };
 
-   c
+
+        // Function to show a custom message box (Do not change this)
+        function showMessage(title, message, isError = false) {
+            const messageBox = document.createElement('div');
+            const bgColor = isError ? 'bg-red-500' : 'bg-unzabeca-black';
+            const titleColor = isError ? 'text-red-800' : 'text-unzabeca-gold';
+            
+            messageBox.className = 'fixed inset-0 bg-gray-600 bg-opacity-75 flex items-center justify-center z-50';
+            messageBox.innerHTML = `
+                <div class="bg-white p-6 rounded-xl shadow-2xl max-w-sm w-full text-center">
+                    <h4 class="text-xl font-bold ${titleColor} mb-3">${title}</h4>
+                    <p class="text-gray-700">${message}</p>
+                    <button onclick="this.parentNode.parentNode.remove()" 
+                            class="mt-4 ${bgColor} text-unzabeca-gold px-4 py-2 rounded-lg hover:opacity-90 transition">
+                        Close
+                    </button>
+                </div>
+            `;
+            document.body.appendChild(messageBox);
+        }
+
+        // 1. Search Bar Functionality (Triggers on 'Enter')
+        document.getElementById('search-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                const query = e.target.value.trim().toUpperCase(); // Normalize query
+                
+                if (courseMap[query]) {
+                    // Priority 1: Match found! Redirect to the specific course folder.
+                    window.open(courseMap[query], '_blank');
+                    e.target.value = ''; // Clear input
+                } else {
+                    // Priority 2: No direct course match found. FALLBACK TO GENERAL GOOGLE SEARCH.
+                    const generalSearchUrl = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+                    
+                    showMessage(
+                        "No Direct Course Found", 
+                        `No specific folder found for <strong>${query}</strong>. Performing general Google search...`,
+                        false
+                    );
+                    // Give user time to read message, then redirect
+                    setTimeout(() => {
+                        window.open(generalSearchUrl, '_blank');
+                    }, 1500); 
+                }
+                e.target.value = ''; // Clear input
+            }
+        });
+    </script>
+</body>
+</html>
+    

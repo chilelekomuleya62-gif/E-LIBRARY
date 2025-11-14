@@ -133,25 +133,13 @@
         </div>
     </footer>
 <script>
-        
-        // --- COURSE REDIRECTION MAP: UPDATE PLACEHOLDERS BELOW! ---
-        // REPLACE THE PLACEHOLDERS WITH YOUR ACTUAL GOOGLE DRIVE FOLDER LINKS.
-        const courseMap = {
-            "https://drive.google.com/drive/folders/1nxj0sfZyQG-4hgApT_OYw8NIFHVx8WII?usp=sharing", 
-            "https://drive.google.com/drive/folders/1gRYdp6hhHLhiJjajMd9xzrs7aaPg2ExH?usp=sharing", 
-            "https://drive.google.com/drive/folders/1gRYdp6hhHLhiJjajMd9xzrs7aaPg2ExH?usp=sharing", 
-            "https://drive.google.com/drive/folders/1xTa3P9x6YAVzmY2kmcE2ZxArvbzDaa9v?usp=sharing",
-            
-        
-            // Add more courses here (e.g., "ECO 101": "YOUR_ECO_101_LINK",)
-        };
 
-
-        // Function to show a custom message box (Do not change this)
+        // Function to show a custom message box instead of alert()
         function showMessage(title, message, isError = false) {
             const messageBox = document.createElement('div');
-            const bgColor = isError ? 'bg-red-500' : 'bg-unzabeca-black';
-            const titleColor = isError ? 'text-red-800' : 'text-unzabeca-gold';
+            
+            const bgColor = isError ? 'bg-red-500' : 'bg-blue-800';
+            const titleColor = isError ? 'text-red-800' : 'text-blue-800';
             
             messageBox.className = 'fixed inset-0 bg-gray-600 bg-opacity-75 flex items-center justify-center z-50';
             messageBox.innerHTML = `
@@ -159,7 +147,7 @@
                     <h4 class="text-xl font-bold ${titleColor} mb-3">${title}</h4>
                     <p class="text-gray-700">${message}</p>
                     <button onclick="this.parentNode.parentNode.remove()" 
-                            class="mt-4 ${bgColor} text-unzabeca-gold px-4 py-2 rounded-lg hover:opacity-90 transition">
+                            class="mt-4 ${bgColor} text-white px-4 py-2 rounded-lg hover:opacity-90 transition">
                         Close
                     </button>
                 </div>
@@ -167,30 +155,12 @@
             document.body.appendChild(messageBox);
         }
 
-        // 1. Search Bar Functionality (Triggers on 'Enter')
+        // 1. Search Bar Functionality
         document.getElementById('search-input').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
-                const query = e.target.value.trim().toUpperCase(); // Normalize query
-                
-                if (courseMap[query]) {
-                    // Priority 1: Match found! Redirect to the specific course folder.
-                    window.open(courseMap[query], '_blank');
-                    e.target.value = ''; // Clear input
-                } else {
-                    // Priority 2: No direct course match found. FALLBACK TO GENERAL GOOGLE SEARCH.
-                    const generalSearchUrl = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
-                    
-                    showMessage(
-                        "No Direct Course Found", 
-                        `No specific folder found for <strong>${query}</strong>. Performing general Google search...`,
-                        false
-                    );
-                    // Give user time to read message, then redirect
-                    setTimeout(() => {
-                        window.open(generalSearchUrl, '_blank');
-                    }, 1500); 
-                }
-                e.target.value = ''; // Clear input
+                const query = e.target.value.trim();
+                showMessage("Search Feature", `You searched for: <strong>${query}</strong>.<br>This is where the search results would load!`);
+                e.target.value = ''; // Clear input after search
             }
         });
     </script>
